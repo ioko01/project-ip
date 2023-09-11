@@ -1,0 +1,115 @@
+:root {
+    --bs-nav-link-hover-color: 3, 73, 122, 1;
+    --bs-navbar-active-color: 3, 73, 122, 1;
+    --bs-emphasis-color-rgb: 3, 73, 122, 1;
+    --bs-border-radius: 0.3rem;
+    --bs-dropdown-link-hover-color: #fff;
+    --bs-dropdown-link-hover-bg: #03487a;
+    --bs-tertiary-bg: #03487a;
+    --bs-dropdown-link-active-color: #fff;
+    --bs-body-color: #000;
+    --bs-color-blue: #03487a;
+    --bs-bg-color-white: #fff;
+    --bs-dropdown-link-active-bg: #dbdce0;
+}
+
+.card-product {
+    clip-path: inset(0px 0px);
+}
+
+.card-expanded-hover {
+    transition: .5s;
+}
+
+.card-expanded-hover:hover {
+    transform: scale(1.1);
+}
+
+.card-expanded-hover {
+    width: 100%;
+}
+
+* {
+    -webkit-text-stroke: .8px;
+}
+
+p, label, a {
+    font-size: 22px!important;
+}
+
+nav,
+nav a {
+    font-size: 24px!important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    background-color: var(--bs-dropdown-link-active-bg);
+}
+
+.dropdown-item {
+    color: #fff;
+}
+
+.dropdown-item:hover {
+    color: var(--bs-color-blue);
+    background-color: var(--bs-bg-color-white);
+}
+
+.dropdown-menu.show {
+    margin: 0;
+    border-radius: 0;
+    border-bottom-left-radius: var(--bs-border-radius);
+    border-bottom-right-radius: var(--bs-border-radius);
+    background-color: var(--bs-dropdown-link-hover-bg);
+    border: none;
+}
+
+.navbar-nav .nav-link.active {
+    color: #7a7a7a;
+    background-color: var(--bs-dropdown-link-active-bg);
+    border-top-left-radius: var(--bs-border-radius);
+    border-top-right-radius: var(--bs-border-radius);
+    border: inherit;
+}
+
+.navbar-nav .nav-link {
+    border-top-left-radius: var(--bs-border-radius);
+    border-top-right-radius: var(--bs-border-radius);
+    border: inherit;
+}
+
+.navbar-nav .nav-link.dropdown-toggle.show:not(.active),
+.navbar-nav .nav-link:hover:not(.active):not(.not-hover) {
+    color: #fff;
+    background-color: var(--bs-dropdown-link-hover-bg);
+}
+
+.bg-blue .dropdown-item {
+    color: white !important;
+}
+
+.bg-blue .dropdown-item:hover {
+    color: #03497a !important;
+    background-color: white !important;
+    border: 0 !important;
+}
+
+.bg-blue {
+    background-color: #03497a;
+    color: white;
+}
+
+.text-blue {
+    color: #03497a;
+}
+
+#line_on_navbar {
+    height: 8px;
+}
+
+.card-static:hover {
+    background-color: #fffcdc !important;
+}
