@@ -1,7 +1,5 @@
 @section('script')
     <script src="{{ asset('fontawesome-free-6.4.2-web/js/all.min.js', env('REDIRECT_HTTPS')) }}"></script>
-
-    <script src="{{ asset('js/main-backend.js', env('REDIRECT_HTTPS')) }}" defer></script>
     <script src="{{ asset('js/modal-default.js', env('REDIRECT_HTTPS')) }}" defer></script>
     <script src="{{ asset('js/ajax-backend.js', env('REDIRECT_HTTPS')) }}"></script>
 
@@ -29,4 +27,6 @@
             return translation;
         }
     </script>
+
+<script src="{{ asset('js/main-backend.js', env('REDIRECT_HTTPS')) }}"></script>
 @endsection

@@ -55,3 +55,29 @@ async function insert(modal_id, data, url) {
         });
     }
 }
+
+function show_data(url, handleData) {
+    return $.ajax({
+        method: "GET",
+        url: url,
+        success: function (data) {
+            handleData(data);
+        },
+        error: function (err) {
+            handleData(err);
+        },
+    });
+}
+
+function group_count_data(data = []) {
+    const groupedCounts = data.reduce((acc, currentValue) => {
+        cur = currentValue["child"];
+        if (acc[cur] === undefined) {
+            acc[cur] = 1;
+        } else {
+            acc[cur]++;
+        }
+        return acc;
+    }, {});
+    return groupedCounts;
+}

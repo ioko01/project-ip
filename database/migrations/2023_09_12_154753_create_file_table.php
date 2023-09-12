@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('file', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('role');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('user_id');
+            $table->tinyInteger('subject_id')->comment('ไอดีเรื่อง');
+            $table->text('file')->comment('ไฟล์');
+            $table->text('file_extension')->nullable()->comment('นามสกุลไฟล์');
+            $table->text('image')->nullable()->comment('รูป');
+            $table->text('image_extension')->nullable()->comment('นามสกุลรูป');
             $table->tinyInteger('status_id')->comment('ไอดีสถานะการใช้งาน');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('file');
     }
 };

@@ -13,8 +13,11 @@ class Category extends Model
 
     protected $fillable = [
         'user_id',
-        'name',
+        'status_id',
+        'name_th',
+        'name_en',
         'parent',
+        'child',
         'icon'
     ];
 }

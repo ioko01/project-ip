@@ -22,7 +22,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
-                       with font-awesome or any other icon font library -->
+                               with font-awesome or any other icon font library -->
                     <li class="nav-header text-secondary">{{ __('Dashboard') }}</li>
                     <li class="nav-item">
                         <a href="/" class="nav-link text-info">
@@ -38,15 +38,23 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('backend.intellectuals.index') }}"
-                            class="nav-link {{ active_route(Request::is('backend/intellectuals')) }}">
-                            <i class="fa-solid fa-layer-group"></i>
+                        <a href="{{ route('backend.categories.index') }}"
+                            class="nav-link {{ active_route(Request::is('backend/categories')) }}">
+                            <i class="nav-icon fa-solid fa-layer-group"></i>
                             <p>{{ __('Categories') }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('backend.subjects.index') }}"
+                            class="nav-link {{ active_route(Request::is('backend/subjects')) }}">
+                            <i class="nav-icon fa-solid fa-book"></i>
+                            <p>{{ __('Subject') }}</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('backend.users.index') }}" class="nav-link {{ active_route(Request::is('backend/users')) }}">
+                        <a href="{{ route('backend.users.index') }}"
+                            class="nav-link {{ active_route(Request::is('backend/users')) }}">
                             <i class="nav-icon fas fa-user"></i>
                             <p>{{ __('Users') }}</p>
                         </a>
