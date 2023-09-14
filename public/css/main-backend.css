@@ -17,6 +17,10 @@
     -webkit-text-stroke: 0.8px;
 }
 
+button {
+    text-decoration: none !important;
+}
+
 p,
 label,
 a {

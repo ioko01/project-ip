@@ -41,7 +41,7 @@ class CategoryController extends Controller
         $user = User::find(auth()->user()->id);
         $roles = ["ADMIN", "MANAGER"];
         if (in_array($user->role, $roles)) {
-            $categories = Category::get();
+            $categories = Category::where('categories.status_id', 1)->get();
             DB::disconnect('categories');
             DB::disconnect('users');
             return response()->json($categories);
@@ -72,6 +72,42 @@ class CategoryController extends Controller
             Category::create($data);
             DB::disconnect('categories');
             DB::disconnect('users');
+            return true;
+        } else {
+            abort(401);
+        }
+    }
+
+    protected function edit_child_category(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $roles = ["ADMIN", "MANAGER"];
+        if (in_array($user->role, $roles)) {
+            $data = [
+                'name_th' => $request->category_name_th,
+                'name_en' => $request->category_name_en,
+                'child' => $request->category_parent
+            ];
+            Category::where('categories.id', $request->category_id)->update($data);
+            DB::disconnect('categories');
+            DB::disconnect('users');
+            return true;
+        } else {
+            abort(401);
+        }
+    }
+
+    protected function change_status_delete(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $roles = ["ADMIN", "MANAGER"];
+        if (in_array($user->role, $roles)) {
+            $data = [
+                'status_id' => 2
+            ];
+            Category::where('categories.id', $request->delete_default)->update($data);
+            DB::disconnect('users');
+            DB::disconnect('categories');
             return true;
         } else {
             abort(401);

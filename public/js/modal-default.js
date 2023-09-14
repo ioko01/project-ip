@@ -1,6 +1,30 @@
-async function default_modal(modal_id, method, modal_title, form, url) {
+async function default_modal(
+    modal_id,
+    method,
+    modal_title,
+    form,
+    url,
+    submit_name
+) {
     const _token = $('meta[name="csrf-token"]').attr("content");
     const _input = input_method(method);
+    let btn = "";
+
+    if (submit_name.match("delete")) {
+        btn = `<button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">${await __(
+            "Cancel"
+        )}</button>
+        <button type="button" id="submit_modal_default" class="btn btn-danger rounded-0">${await __(
+            "Delete"
+        )}</button>`;
+    } else {
+        btn = `<button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">${await __(
+            "Close"
+        )}</button>
+        <button type="button" id="submit_modal_default" class="btn btn-success rounded-0">${await __(
+            "Save"
+        )}</button>`;
+    }
 
     $("#open_modal_default").html(
         `
@@ -19,12 +43,7 @@ async function default_modal(modal_id, method, modal_title, form, url) {
                         </form>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">${await __(
-                        "Close"
-                    )}</button>
-                    <button type="button" id="submit_modal_default" class="btn btn-success rounded-0">${await __(
-                        "Save"
-                    )}</button>
+                    ${btn}
                     </div>
                 </div>
             </div>
@@ -34,113 +53,34 @@ async function default_modal(modal_id, method, modal_title, form, url) {
 
     $(modal_id).modal("show");
 
-    $("#submit_modal_default").on("click", function () {
-        insert(modal_id, $("#form_modal_default").serializeArray(), url);
-        show_data("/backend/categories/show_categories", (categories) => {
-            const group_count = group_count_data(categories);
-            $("#intellectual_type #accordion").html("");
-            categories.forEach((item) => {
-                window.navigator.languages[1].toLowerCase() == "th"
-                    ? (i18n_name = item.name_th)
-                    : (i18n_name = item.name_en);
-
-                if (item.parent == 0) {
-                    $("#intellectual_type #accordion").append(
-                        `
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="${item.id}">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#child_collapse_${item.id}"
-                                    aria-expanded="true" aria-controls="child_collapse_${item.id}">
-                                    ${i18n_name} <span
-                                        class="bg-blue px-1 rounded"></span>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="child_collapse_${item.id}" class="panel-collapse collapse in" role="tabpanel"
-                            aria-labelledby="${item.id}">
-                            <div id="child_parent_${item.id}" class="panel-body px-4 py-2"> </div>
-                        </div>
-                    </div>
-                    `
-                    );
-                }
-
-                if (item.parent == 1) {
-                    $(`#child_parent_${item.child}`).append(
-                        `
-                    <div class="d-flex justify-content-between category">
-                        <a href="#" class="d-block">${i18n_name} <span
-                                class="bg-warning text-white fs-6 px-1 rounded">1</span></a>
-                        <div>
-                            <a href="#" class="mx-2 text-primary"><i
-                                    class="fs-6 fa-solid fa-eye align-middle"></i> ดู</a>
-                            <a href="#" class="mx-2 text-warning"><i
-                                    class="fs-6 fa-solid fa-pen-to-square align-middle"></i> แก้ไข</a>
-                            <a href="#" class="mx-2 text-danger"><i
-                                    class="fs-6 fa-solid fa-trash align-middle"></i> ลบ</a>
-                        </div>
-                    </div>
-                    `
-                    );
-                }
-
-                $(`#${item.id} .panel-title a span`).html(
-                    group_count[item.id] ? group_count[item.id] : 0
-                );
-            });
-            $(".panel-collapse").on("show.bs.collapse", function () {
-                $(this).siblings(".panel-heading").addClass("active");
-            });
-
-            $(".panel-collapse").on("hide.bs.collapse", function () {
-                $(this).siblings(".panel-heading").removeClass("active");
-            });
-        });
-    });
+    switch (submit_name) {
+        case "category":
+            submit_category(modal_id, url);
+            break;
+        case "user":
+            submit_user(modal_id, url);
+            break;
+        case "delete_user":
+            delete_user(modal_id, url);
+            break;
+        case "delete_category":
+            delete_category(modal_id, url);
+            break;
+        case "edit_category":
+            edit_category(modal_id, url);
+            break;
+        case "change_password":
+            change_password(modal_id, url);
+            break;
+        default:
+            break;
+    }
 }
 
-async function form_category() {
-    let parent = "";
-    show_data("/backend/categories/show_categories", (categories) => {
-        categories.forEach((item) => {
-            window.navigator.languages[1].toLowerCase() == "th"
-                ? (i18n_name = item.name_th)
-                : (i18n_name = item.name_en);
-
-            if (item.parent == 0) {
-                parent += `<option value="${item.id}">${i18n_name}</option>`;
-            }
-        });
-    });
+async function form_delete_default(id, name) {
     const form = `
-        <label for="category_name_th">${await __("Name TH")}</label>
-        <input id="category_name_th" name="category_name_th" type="text" class="form-control rounded-0" />
-
-        <label for="category_name_en" class="mt-2">${await __(
-            "Name EN"
-        )} <span class="text-danger">ไม่บังคับ</span></label>
-        <input id="category_name_en" name="category_name_en" type="text" class="form-control rounded-0" />
-
-        <label for="category_parent" class="mt-2">${await __(
-            "Parent Category"
-        )}</label>
-        <select id="category_parent" name="category_parent" class="form-select">
-            ${parent}
-        </select>
-    `;
-    return form;
-}
-
-async function form_parent_category() {
-    const form = `
-    <label for="category_name_th">${await __("Name TH")}</label>
-    <input id="category_name_th" name="category_name_th" type="text" class="form-control rounded-0" />
-
-    <label for="category_name_en" class="mt-2">${await __(
-        "Name EN"
-    )} <span class="text-danger">ไม่บังคับ</span></label>
-    <input id="category_name_en" name="category_name_en" type="text" class="form-control rounded-0" />
-    `;
+        <label>${await __("Want to delete ?", { attribute: name })}</label>
+        <input type="hidden" name="delete_default" id="delete_default" value="${id}"/>
+        `;
     return form;
 }

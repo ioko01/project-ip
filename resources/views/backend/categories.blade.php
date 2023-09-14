@@ -6,12 +6,12 @@
             <div class="bg-white w-100 px-5 py-4 shadow">
                 <div class="mb-3">
                     <button class="btn btn-primary text-white rounded-0 px-3"
-                        onclick="default_modal('#modal', 'POST', '{{ __('Add Parent Category') }}', form_parent_category(), '{{ route('backend.category.store') }}')">
+                        onclick="default_modal('#modal', 'POST', '{{ __('Add Parent Category') }}', form_parent_category(), '{{ route('backend.category.store') }}', 'category')">
                         +
                         {{ __('Add Parent Category') }}</button>
 
                     <button class="btn btn-warning text-white rounded-0 px-3"
-                        onclick="default_modal('#modal', 'POST', '{{ __('Add Child Category') }}', form_category(), '{{ route('backend.category.store') }}')">
+                        onclick="default_modal('#modal', 'POST', '{{ __('Add Child Category') }}', form_category(), '{{ route('backend.category.store') }}', 'category')">
                         +
                         {{ __('Add Child Category') }}</button>
                 </div>

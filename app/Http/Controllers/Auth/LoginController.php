@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -46,5 +49,18 @@ class LoginController extends Controller
     public function username()
     {
         return 'username';
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        $user = User::where('username', $request->username)->first();
+        DB::disconnect('users');
+
+        if ($user->status_id == 1) {
+            return $this->guard()->attempt(
+                $this->credentials($request),
+                $request->boolean('remember')
+            );
+        }
     }
 }
