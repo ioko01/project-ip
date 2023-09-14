@@ -6,7 +6,7 @@
             <div class="bg-white w-100 px-5 py-4 shadow">
                 <div class="mb-3">
                     <button class="btn btn-primary text-white rounded-0 px-3"
-                        onclick="default_modal('#modal', 'POST', '{{ __('Add Subject') }}', form_user(), '{{ route('backend.user.register') }}', 'user')">
+                        onclick="default_modal('#modal', 'POST', '{{ __('Add Subject') }}', form_subject(), '{{ route('backend.user.register') }}', 'user')">
                         +
                         {{ __('Add Subject') }}</button>
                 </div>

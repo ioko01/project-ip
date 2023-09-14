@@ -75,5 +75,13 @@ return [
     "Cancel" => "ยกเลิก",
     "cancel" => "ยกเลิก",
     "Want to delete ?" => "ต้องการลบ <span class='text-danger'>:attribute</span> หรือไม่",
-    "Confirm Change Password ?" => "ต้องการเปลี่ยนรหัสผ่านหรือไม่ ?"
+    "Confirm Change Password ?" => "ต้องการเปลี่ยนรหัสผ่านหรือไม่ ?",
+    "Subject Name TH" => "ชื่อเรื่อง (ภาษาไทย)",
+    "Subject Name EN" => "ชื่อเรื่อง (ภาษาอังกฤษ)",
+    "Author" => "ผู้แต่ง/เจ้าของเรื่อง/ผู้ประดิษฐ์",
+    "License" => "การอนุญาต/อนุมัติ",
+    "Serial Number" => "เลขที่คำขอ",
+    "Order" => "การสั่งซื้อ",
+    "Tell" => "โทร",
+    "Contact" => "การติดต่อ"
 ];
