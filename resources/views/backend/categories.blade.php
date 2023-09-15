@@ -32,5 +32,6 @@
 
 
     <!-- Modal -->
+    <div id="open_modal_loading"></div>
     <div id="open_modal_default"></div>
 @endsection

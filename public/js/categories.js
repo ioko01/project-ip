@@ -10,6 +10,7 @@ async function form_edit_child_category(id, parent_id) {
         name_th: "",
         name_en: "",
     };
+    let form = "";
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
             window.navigator.languages[1].toLowerCase() == "th"
@@ -28,28 +29,27 @@ async function form_edit_child_category(id, parent_id) {
             }
         });
     });
+    form = `
+    <input type="hidden" value="${id}" name="category_id" id="category_id"/>
+    <label for="category_name_th">${await __("Name TH")}</label>
+    <input value="${
+        data.name_th
+    }" id="category_name_th" name="category_name_th" type="text" class="form-control rounded-0" required />
 
-    const form = `
-        <input type="hidden" value="${id}" name="category_id" id="category_id"/>
-        <label for="category_name_th">${await __("Name TH")}</label>
-        <input value="${
-            data.name_th
-        }" id="category_name_th" name="category_name_th" type="text" class="form-control rounded-0" required />
+    <label for="category_name_en" class="mt-2">${await __(
+        "Name EN"
+    )} <span class="text-danger">ไม่บังคับ</span></label>
+    <input value="${
+        data.name_en
+    }" id="category_name_en" name="category_name_en" type="text" class="form-control rounded-0" />
 
-        <label for="category_name_en" class="mt-2">${await __(
-            "Name EN"
-        )} <span class="text-danger">ไม่บังคับ</span></label>
-        <input value="${
-            data.name_en
-        }" id="category_name_en" name="category_name_en" type="text" class="form-control rounded-0" />
-
-        <label for="category_parent" class="mt-2">${await __(
-            "Parent Category"
-        )}</label>
-        <select id="category_parent" name="category_parent" class="form-select">
-            ${parent}
-        </select>
-    `;
+    <label for="category_parent" class="mt-2">${await __(
+        "Parent Category"
+    )}</label>
+    <select id="category_parent" name="category_parent" class="form-select">
+        ${parent}
+    </select>
+`;
     return form;
 }
 
@@ -161,8 +161,7 @@ function show_main_categories(categories) {
         if (item.parent == 1) {
             child += `
             <div class="d-flex justify-content-between category">
-                <a href="#" class="d-block">${i18n_name[i]} <span
-                        class="bg-warning text-white fs-6 px-1 rounded">1</span></a>
+                <a href="#" class="d-block">${i18n_name[i]}</a>
                 <div class="d-flex flex-nowrap">
                     <button class="btn btn-sm btn-outline-warning rounded-0 mx-2" onclick="default_modal('#modal', 'PUT', '${await __(
                         "Confirm Edit ?"

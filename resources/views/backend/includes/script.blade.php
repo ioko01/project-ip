@@ -19,13 +19,6 @@
         <script src="{{ asset('js/categories.js', env('REDIRECT_HTTPS')) }}" defer></script>
     @endif
 
-    @if (Request::is('backend/user') ||
-            Request::is('backend/users') ||
-            Request::is('backend/user/*') ||
-            Request::is('backend/users/*'))
-        <script src="{{ asset('js/users.js', env('REDIRECT_HTTPS')) }}" defer></script>
-    @endif
-
     @if (Request::is('backend/subject') ||
             Request::is('backend/subjects') ||
             Request::is('backend/subject/*') ||

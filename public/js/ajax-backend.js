@@ -242,6 +242,7 @@ function get_data(url, handleData) {
         success: function (data) {
             handleData(data);
         },
+        beforeSend: function () {},
         error: function (err) {
             handleData(err);
         },
