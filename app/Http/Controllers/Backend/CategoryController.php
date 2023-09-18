@@ -67,7 +67,8 @@ class CategoryController extends Controller
                 'name_th' => $request->category_name_th,
                 'name_en' => $request->category_name_en,
                 'child' => $request->category_parent,
-                'parent' => $parent
+                'parent' => $parent,
+                'icon' => $request->icon
             ];
             Category::create($data);
             DB::disconnect('categories');
@@ -86,7 +87,8 @@ class CategoryController extends Controller
             $data = [
                 'name_th' => $request->category_name_th,
                 'name_en' => $request->category_name_en,
-                'child' => $request->category_parent
+                'child' => $request->category_parent,
+                'icon' => $request->icon
             ];
             Category::where('categories.id', $request->category_id)->update($data);
             DB::disconnect('categories');

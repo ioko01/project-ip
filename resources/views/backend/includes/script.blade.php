@@ -1,5 +1,6 @@
 @section('script')
     <script src="{{ asset('fontawesome-free-6.4.2-web/js/all.min.js', env('REDIRECT_HTTPS')) }}"></script>
+    <script src="{{ asset('js/list-font-awesome.js', env('REDIRECT_HTTPS')) }}"></script>
     <script src="{{ asset('js/dateFormat.js', env('REDIRECT_HTTPS')) }}"></script>
 
     <script src="{{ asset('js/modal-default.js', env('REDIRECT_HTTPS')) }}" defer></script>
@@ -60,4 +61,5 @@
     </script>
 
     <script src="{{ asset('js/main-backend.js', env('REDIRECT_HTTPS')) }}"></script>
+
 @endsection

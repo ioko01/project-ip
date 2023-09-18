@@ -17,6 +17,22 @@
     -webkit-text-stroke: 0.8px;
 }
 
+.check-design:checked ~ label {
+    background-color: #03487a;
+    color: white;
+}
+
+.lb-check-design {
+    background-color: #cecece;
+    padding: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lb-check-design:hover {
+    background-color: #03487a81;
+}
+
 button {
     text-decoration: none !important;
 }

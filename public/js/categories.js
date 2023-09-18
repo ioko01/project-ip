@@ -9,8 +9,11 @@ async function form_edit_child_category(id, parent_id) {
     let data = {
         name_th: "",
         name_en: "",
+        icon: "",
     };
     let form = "";
+    let icon_list = "";
+
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
             window.navigator.languages[1].toLowerCase() == "th"
@@ -26,9 +29,24 @@ async function form_edit_child_category(id, parent_id) {
             if (item.id == id) {
                 data.name_th = item.name_th;
                 data.name_en = item.name_en;
+                data.icon = item.icon;
             }
         });
     });
+
+    icons.forEach((icon) => {
+        icon_list += `
+        <div class="form-check-inline m-0">
+            <input class="check-design d-none" type="radio" name="icon" id="${icon}" value="${icon}" ${
+            data.icon == icon ? "checked" : ""
+        }>
+            <label style="width: 70px;" class="lb-check-design" for="${icon}">
+                <i class='fa-solid fa-${icon}'></i>
+            </label>
+        </div>
+        `;
+    });
+
     form = `
     <input type="hidden" value="${id}" name="category_id" id="category_id"/>
     <label for="category_name_th">${await __("Name TH")}</label>
@@ -40,7 +58,7 @@ async function form_edit_child_category(id, parent_id) {
         "Name EN"
     )} <span class="text-danger">ไม่บังคับ</span></label>
     <input value="${
-        data.name_en
+        data.name_en ? data.name_en : ""
     }" id="category_name_en" name="category_name_en" type="text" class="form-control rounded-0" />
 
     <label for="category_parent" class="mt-2">${await __(
@@ -49,11 +67,27 @@ async function form_edit_child_category(id, parent_id) {
     <select id="category_parent" name="category_parent" class="form-select">
         ${parent}
     </select>
+
+    <label class="mt-2 w-100">${await __("Icon")}</label>
+    
+    <div style="height:300px;overflow:auto;" class="text-center">${icon_list}</div>
 `;
     return form;
 }
 
 async function form_parent_category() {
+    let icon_list = "";
+    icons.forEach((icon) => {
+        icon_list += `
+        <div class="form-check-inline m-0">
+            <input class="check-design d-none" type="radio" name="icon" id="${icon}" value="${icon}">
+            <label style="width: 70px;" class="lb-check-design" for="${icon}">
+                <i class='fa-solid fa-${icon}'></i>
+            </label>
+        </div>
+        `;
+    });
+
     const form = `
     <label for="category_name_th">${await __("Name TH")}</label>
     <input id="category_name_th" name="category_name_th" type="text" class="form-control rounded-0" required />
@@ -62,12 +96,17 @@ async function form_parent_category() {
         "Name EN"
     )} <span class="text-danger">ไม่บังคับ</span></label>
     <input id="category_name_en" name="category_name_en" type="text" class="form-control rounded-0" />
+    
+    <label class="mt-2 w-100">${await __("Icon")}</label>
+    
+    <div style="height:300px;overflow:auto;" class="text-center">${icon_list}</div>
     `;
     return form;
 }
 
 async function form_category() {
     let parent = "";
+    let icon_list = "";
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
             window.navigator.languages[1].toLowerCase() == "th"
@@ -78,6 +117,16 @@ async function form_category() {
                 parent += `<option value="${item.id}">${i18n_name}</option>`;
             }
         });
+    });
+    icons.forEach((icon) => {
+        icon_list += `
+        <div class="form-check-inline m-0">
+            <input class="check-design d-none" type="radio" name="icon" id="${icon}" value="${icon}">
+            <label style="width: 70px;" class="lb-check-design" for="${icon}">
+                <i class='fa-solid fa-${icon}'></i>
+            </label>
+        </div>
+        `;
     });
 
     const form = `
@@ -95,6 +144,11 @@ async function form_category() {
         <select id="category_parent" name="category_parent" class="form-select">
             ${parent}
         </select>
+
+        <label class="mt-2 w-100">${await __("Icon")}</label>
+        
+        <div style="height:300px;overflow:auto;" class="text-center">${icon_list}</div>
+
     `;
     return form;
 }
@@ -143,7 +197,7 @@ function show_main_categories(categories) {
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#child_collapse_${item.id}"
                                     aria-expanded="true" aria-controls="child_collapse_${item.id}">
-                                    ${i18n_name[i]} <span
+                                    <i class="fa-solid fa-${item.icon}"></i> ${i18n_name[i]} <span
                                         class="bg-blue px-1 rounded"></span>
                                 </a>
                             </h4>
@@ -161,7 +215,9 @@ function show_main_categories(categories) {
         if (item.parent == 1) {
             child += `
             <div class="d-flex justify-content-between category">
-                <a href="#" class="d-block">${i18n_name[i]}</a>
+                <a href="#" class="d-block"><i class="fa-solid fa-${
+                    item.icon
+                }"></i>  ${i18n_name[i]}</a>
                 <div class="d-flex flex-nowrap">
                     <button class="btn btn-sm btn-outline-warning rounded-0 mx-2" onclick="default_modal('#modal', 'PUT', '${await __(
                         "Confirm Edit ?"
