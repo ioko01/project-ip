@@ -4,6 +4,9 @@ $(document).ready(async function () {
     );
 });
 
+const current_page = 1;
+const amount = 50;
+
 async function form_edit_child_category(id, parent_id) {
     let parent = "";
     let data = {
@@ -12,7 +15,6 @@ async function form_edit_child_category(id, parent_id) {
         icon: "",
     };
     let form = "";
-    let icon_list = "";
 
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
@@ -34,18 +36,9 @@ async function form_edit_child_category(id, parent_id) {
         });
     });
 
-    icons.forEach((icon) => {
-        icon_list += `
-        <div class="form-check-inline m-0">
-            <input class="check-design d-none" type="radio" name="icon" id="${icon}" value="${icon}" ${
-            data.icon == icon ? "checked" : ""
-        }>
-            <label style="width: 70px;" class="lb-check-design" for="${icon}">
-                <i class='fa-solid fa-${icon}'></i>
-            </label>
-        </div>
-        `;
-    });
+    const show_icon = load_icons(current_page, amount, data.icon);
+    const pages = get_page(icons.length, current_page, amount);
+    const paginate = pagination(pages, amount, 1, data.icon);
 
     form = `
     <input type="hidden" value="${id}" name="category_id" id="category_id"/>
@@ -70,23 +63,17 @@ async function form_edit_child_category(id, parent_id) {
 
     <label class="mt-2 w-100">${await __("Icon")}</label>
     
-    <div style="height:300px;overflow:auto;" class="text-center">${icon_list}</div>
+    <div id="show_icon" style="height:300px;overflow:auto;" class="text-center mb-3">${show_icon}</div>
+    <div id="paginate">${paginate}</div>
+    
 `;
     return form;
 }
 
 async function form_parent_category() {
-    let icon_list = "";
-    icons.forEach((icon) => {
-        icon_list += `
-        <div class="form-check-inline m-0">
-            <input class="check-design d-none" type="radio" name="icon" id="${icon}" value="${icon}">
-            <label style="width: 70px;" class="lb-check-design" for="${icon}">
-                <i class='fa-solid fa-${icon}'></i>
-            </label>
-        </div>
-        `;
-    });
+    const show_icon = load_icons(current_page, amount);
+    const pages = get_page(icons.length, current_page, amount);
+    const paginate = pagination(pages, amount, 1);
 
     const form = `
     <label for="category_name_th">${await __("Name TH")}</label>
@@ -99,14 +86,14 @@ async function form_parent_category() {
     
     <label class="mt-2 w-100">${await __("Icon")}</label>
     
-    <div style="height:300px;overflow:auto;" class="text-center">${icon_list}</div>
+    <div id="show_icon" style="height:300px;overflow:auto;" class="text-center mb-3">${show_icon}</div>
+    <div id="paginate">${paginate}</div>
     `;
     return form;
 }
 
 async function form_category() {
     let parent = "";
-    let icon_list = "";
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
             window.navigator.languages[1].toLowerCase() == "th"
@@ -118,16 +105,10 @@ async function form_category() {
             }
         });
     });
-    icons.forEach((icon) => {
-        icon_list += `
-        <div class="form-check-inline m-0">
-            <input class="check-design d-none" type="radio" name="icon" id="${icon}" value="${icon}">
-            <label style="width: 70px;" class="lb-check-design" for="${icon}">
-                <i class='fa-solid fa-${icon}'></i>
-            </label>
-        </div>
-        `;
-    });
+
+    const show_icon = load_icons(current_page, amount);
+    const pages = get_page(icons.length, current_page, amount);
+    const paginate = pagination(pages, amount, 1);
 
     const form = `
         <label for="category_name_th">${await __("Name TH")}</label>
@@ -147,8 +128,8 @@ async function form_category() {
 
         <label class="mt-2 w-100">${await __("Icon")}</label>
         
-        <div style="height:300px;overflow:auto;" class="text-center">${icon_list}</div>
-
+        <div id="show_icon" style="height:300px;overflow:auto;" class="text-center mb-3">${show_icon}</div>
+        <div id="paginate">${paginate}</div>
     `;
     return form;
 }

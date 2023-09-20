@@ -56,11 +56,13 @@ class LoginController extends Controller
         $user = User::where('username', $request->username)->first();
         DB::disconnect('users');
 
-        if ($user->status_id == 1) {
-            return $this->guard()->attempt(
-                $this->credentials($request),
-                $request->boolean('remember')
-            );
+        if ($user) {
+            if ($user->status_id == 1) {
+                return $this->guard()->attempt(
+                    $this->credentials($request),
+                    $request->boolean('remember')
+                );
+            }
         }
     }
 }
