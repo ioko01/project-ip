@@ -45,7 +45,10 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         Route::post('category/store', [CategoryController::class, 'store'])->name('backend.category.store');
         Route::put('category/delete', [CategoryController::class, 'change_status_delete']);
         Route::put('category/child/edit', [CategoryController::class, 'edit_child_category']);
+        Route::put('category/parent/edit', [CategoryController::class, 'edit_parent_category']);
         Route::get('subjects', [SubjectController::class, 'index'])->name('backend.subjects.index');
+        Route::post('subject/store', [SubjectController::class, 'store'])->name('backend.subject.store');
+        Route::get('subjects/show_subjects', [SubjectController::class, 'show_subjects']);
     });
 });
 

@@ -80,6 +80,12 @@ async function default_modal(
             case "change_password":
                 change_password(modal_id, url);
                 break;
+            case "edit_parent_category":
+                edit_category(modal_id, url);
+                break;
+            case "subject":
+                submit_subject(modal_id, url);
+                break;
             default:
                 break;
         }

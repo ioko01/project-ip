@@ -99,6 +99,25 @@ class CategoryController extends Controller
         }
     }
 
+    protected function edit_parent_category(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $roles = ["ADMIN", "MANAGER"];
+        if (in_array($user->role, $roles)) {
+            $data = [
+                'name_th' => $request->category_name_th,
+                'name_en' => $request->category_name_en,
+                'icon' => $request->icon
+            ];
+            Category::where('categories.id', $request->category_id)->update($data);
+            DB::disconnect('categories');
+            DB::disconnect('users');
+            return true;
+        } else {
+            abort(401);
+        }
+    }
+
     protected function change_status_delete(Request $request)
     {
         $user = User::find(auth()->user()->id);

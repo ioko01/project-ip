@@ -1,4 +1,4 @@
-async function insert(modal_id, data = [], url) {
+async function insert(modal_id, data = [], url, file = false) {
     const arr_required = data.filter((item) => $(`#${item.name}:invalid`)[0]);
     data.filter(async (item) => {
         $(`#${item.name}`).removeClass("is-invalid");
@@ -12,7 +12,6 @@ async function insert(modal_id, data = [], url) {
             ).insertAfter(`#${item.name}:invalid`);
         }
     });
-
     if (arr_required[0]) {
         Swal.fire({
             title: await __("Error"),
@@ -21,10 +20,20 @@ async function insert(modal_id, data = [], url) {
             confirmButtonColor: "#3085d6",
         });
     } else {
+        let formData = data;
+        if (file) {
+            formData = new FormData($("#form_modal_default")[0]);
+
+            // const _token = $('meta[name="csrf-token"]').attr("content");
+            $.ajaxSetup({
+                processData: false,
+                contentType: false,
+            });
+        }
         $.ajax({
             method: "POST",
             url: url,
-            data: data,
+            data: formData,
             success: async function (data) {
                 if (data) {
                     Swal.fire({
@@ -66,7 +75,6 @@ async function insert(modal_id, data = [], url) {
                             )}</span>`
                         ).insertAfter(`[name=${key}]`);
                     }
-
                     Swal.fire({
                         title: await __("Error"),
                         html: await __(
