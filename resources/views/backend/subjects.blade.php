@@ -17,6 +17,20 @@
                         <h4 class="d-inline">{{ __('Subject') }}</h4>
                     </div>
                 </div>
+                <div id="subject" class="table-responsive">
+                    <table class="table table-striped table-hover text-center">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td class="text-start">เรื่อง</td>
+                                <td>ผู้เขียน</td>
+                                <td>หมวดหมู่</td>
+                                <td>จัดการ</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_subjects"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

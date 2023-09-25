@@ -60,6 +60,17 @@ return [
     "Delete User" => "ลบผู้ใช้งาน",
     "category_name_th" => "หมวดหมู่ (ภาษาไทย)",
     "category_name_en" => "หมวดหมู่ (ภาษาอังกฤษ)",
+    "subject_name_th" => "ชื่อเรื่อง (ภาษาไทย)",
+    "subject_name_en" => "ชื่อเรื่อง (ภาษาอังกฤษ)",
+    "subject_author" => "ผู้แต่ง/เจ้าของเรื่อง/ผู้ประดิษฐ์",
+    "subject_license" => "การอนุญาต/อนุมัติ",
+    "subject_serial_number" => "เลขที่คำขอ",
+    "subject_order" => "การสั่งซื้อ",
+    "subject_tell" => "โทร",
+    "subject_serial_number" => "เลขที่คำขอ",
+    "subject_contact" => "การติดต่อ",
+    "File" => "ไฟล์",
+    "file" => "ไฟล์",
     "name" => "ชื่อ",
     "username" => "ชื่อผู้ใช้งาน",
     "email" => "อีเมล",
@@ -87,5 +98,7 @@ return [
     "Loading" => "กำลังโหลด",
     "Confirm Edit ?" => "ต้องการแก้ไขหรือไม่ ?",
     "Icon" => "ไอคอน",
-    "Edit" => "แก้ไข"
+    "Edit" => "แก้ไข",
+    "File Image" => "ไฟล์รูป",
+    "file image" => "ไฟล์รูป"
 ];

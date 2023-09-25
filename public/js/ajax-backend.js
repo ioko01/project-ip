@@ -1,15 +1,17 @@
 async function insert(modal_id, data = [], url, file = false) {
-    const arr_required = data.filter((item) => $(`#${item.name}:invalid`)[0]);
+    const arr_required = data.filter(
+        (item) => $(`#${item.name.replace("[]", "")}:invalid`)[0]
+    );
     data.filter(async (item) => {
-        $(`#${item.name}`).removeClass("is-invalid");
-        $(`#${item.name} + span`).remove();
-        if ($(`#${item.name}:invalid`)) {
-            $(`#${item.name}:invalid`).addClass("is-invalid");
+        $(`#${item.name.replace("[]", "")}`).removeClass("is-invalid");
+        $(`#${item.name.replace("[]", "")} + span`).remove();
+        if ($(`#${item.name.replace("[]", "")}:invalid`)) {
+            $(`#${item.name.replace("[]", "")}:invalid`).addClass("is-invalid");
             $(
                 `<span class="d-block text-danger">${await __("required", {
-                    attribute: await __(item.name),
+                    attribute: await __(item.name.replace("[]", "")),
                 })}</span>`
-            ).insertAfter(`#${item.name}:invalid`);
+            ).insertAfter(`#${item.name.replace("[]", "")}:invalid`);
         }
     });
     if (arr_required[0]) {

@@ -61,5 +61,4 @@
     </script>
 
     <script src="{{ asset('js/main-backend.js', env('REDIRECT_HTTPS')) }}"></script>
-
 @endsection

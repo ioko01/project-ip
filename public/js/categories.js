@@ -222,7 +222,7 @@ function show_main_categories(categories) {
         if (item.parent == 0) {
             $("#intellectual_type #accordion").append(
                 `
-                    <div class="panel panel-default">
+                    <div class="panel panel-default mb-2">
                         <div class="panel-heading" role="tab" id="${item.id}">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#child_collapse_${

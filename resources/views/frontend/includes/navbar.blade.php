@@ -40,23 +40,33 @@
                                     class="d-inline d-md-none d-lg-inline  text-wrap">{{ __('Intellectual Property') }}</span>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-start w-auto" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-wrap" href="#">
-                                    {{ __('Works that are produced and ready for sale') }} <span
-                                        class="fs-6 bg-light px-2 text-dark rounded">1</span>
-                                </a>
-                                <a class="dropdown-item text-wrap" href="#">
-                                    {{ __('Patent / Petty Patent') }} <span
-                                        class="fs-6 bg-light px-2 text-dark rounded">350</span>
-                                </a>
+                            @php
+                                $categories = DB::table('categories')
+                                    ->where('categories.status_id', 1)
+                                    ->get();
+                            @endphp
+
+                            <div class="dropdown-menu dropdown-menu-start w-auto dropend" aria-labelledby="navbarDropdown">
+                                @forelse ($categories as $item)
+                                    @if ($item->parent == 0)
+                                        <a class="dropdown-item text-wrap dropdown-toggle" href="#">
+                                            {{ __($item->name_th) }} <span
+                                                class="fs-6 bg-light px-2 text-dark rounded">1</span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><button class="dropdown-item" type="button">Action</button></li>
+                                        </ul>
+                                    @endif
+                                @empty
+                                @endforelse
                             </div>
                         </li>
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link p-2 {{ active_route(Request::is('login')) }}"
-                                        href="{{ route('login') }}"><i class="fa-solid fa-right-to-bracket align-middle"></i> <span
-                                            class="d-inline d-md-none d-lg-inline  text-wrap">{{ __('Login') }}</span></a>
+                                        href="{{ route('login') }}"><i class="fa-solid fa-right-to-bracket align-middle"></i>
+                                        <span class="d-inline d-md-none d-lg-inline  text-wrap">{{ __('Login') }}</span></a>
                                 </li>
                             @endif
                         @else
