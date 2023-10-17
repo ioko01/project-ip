@@ -18,7 +18,7 @@
 }
 
 .card-expanded-hover {
-    transition: .5s;
+    transition: 0.5s;
 }
 
 .card-expanded-hover:hover {
@@ -30,16 +30,18 @@
 }
 
 * {
-    -webkit-text-stroke: .8px;
+    -webkit-text-stroke: 0.8px;
 }
 
-p, label, a {
-    font-size: 22px!important;
+p,
+label,
+a {
+    font-size: 22px !important;
 }
 
 nav,
 nav a {
-    font-size: 24px!important;
+    font-size: 24px !important;
 }
 
 .dropdown-item.active,
@@ -53,18 +55,34 @@ nav a {
     color: #fff;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover,
+.dropdown-item:focus {
     color: var(--bs-color-blue);
     background-color: var(--bs-bg-color-white);
 }
 
 .dropdown-menu.show {
+    color: white;
     margin: 0;
     border-radius: 0;
     border-bottom-left-radius: var(--bs-border-radius);
     border-bottom-right-radius: var(--bs-border-radius);
     background-color: var(--bs-dropdown-link-hover-bg);
     border: none;
+}
+
+.dropend .submenu {
+    margin: 0;
+    border-radius: 0;
+    border-top-right-radius: var(--bs-border-radius);
+    border-bottom-right-radius: var(--bs-border-radius);
+    border-bottom-left-radius: var(--bs-border-radius);
+    background-color: var(--bs-dropdown-link-hover-bg);
+    border: none;
+}
+
+.dropend .submenu.show {
+    margin: 0;
 }
 
 .navbar-nav .nav-link.active {

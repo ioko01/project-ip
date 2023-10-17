@@ -14,6 +14,12 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="{{ asset('css/main.css?v=1', env('REDIRECT_HTTPS')) }}" defer />
-        <link rel="stylesheet" href="{{ asset('fontawesome-free-6.4.2-web/css/all.min.css?v=1', env('REDIRECT_HTTPS')) }}" defer />
+        <link rel="stylesheet" href="{{ asset('fontawesome-free-6.4.2-web/css/all.min.css?v=1', env('REDIRECT_HTTPS')) }}"
+            defer />
+        <script>
+            function storage_path(path) {
+                return `{!! storage_path('${path}') !!}`;
+            }
+        </script>
     </head>
 @endsection

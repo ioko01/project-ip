@@ -18,9 +18,15 @@ async function form_edit_child_category(id, parent_id) {
 
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
-            window.navigator.languages[1].toLowerCase() == "th"
-                ? (i18n_name = item.name_th)
-                : (i18n_name = item.name_en);
+            if ($("html").attr("lang").toLowerCase() == "th") {
+                i18n_name = item.name_th;
+            } else {
+                if (item.name_en) {
+                    i18n_name = item.name_en;
+                } else {
+                    i18n_name = item.name_th;
+                }
+            }
             let selected = "";
             if (item.id == parent_id) {
                 selected = "selected";
@@ -80,9 +86,15 @@ async function form_edit_parent_category(id) {
 
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
-            window.navigator.languages[1].toLowerCase() == "th"
-                ? (i18n_name = item.name_th)
-                : (i18n_name = item.name_en);
+            if ($("html").attr("lang").toLowerCase() == "th") {
+                i18n_name = item.name_th;
+            } else {
+                if (item.name_en) {
+                    i18n_name = item.name_en;
+                } else {
+                    i18n_name = item.name_th;
+                }
+            }
 
             if (item.id == id) {
                 data.name_th = item.name_th;
@@ -145,9 +157,15 @@ async function form_category() {
     let parent = "";
     await get_data("/backend/categories/show_categories", (categories) => {
         categories.forEach((item) => {
-            window.navigator.languages[1].toLowerCase() == "th"
-                ? (i18n_name = item.name_th)
-                : (i18n_name = item.name_en);
+            if ($("html").attr("lang").toLowerCase() == "th") {
+                i18n_name = item.name_th;
+            } else {
+                if (item.name_en) {
+                    i18n_name = item.name_en;
+                } else {
+                    i18n_name = item.name_th;
+                }
+            }
 
             if (item.parent == 0) {
                 parent += `<option value="${item.id}">${i18n_name}</option>`;
@@ -185,7 +203,7 @@ async function form_category() {
 
 function delete_category(modal_id, url) {
     $("#submit_modal_default").on("click", async function () {
-        deleted(modal_id, $("#form_modal_default").serializeArray(), url);
+        await deleted(modal_id, $("#form_modal_default").serializeArray(), url);
         await get_data("/backend/categories/show_categories", (categories) =>
             show_main_categories(categories)
         );
@@ -194,7 +212,7 @@ function delete_category(modal_id, url) {
 
 function submit_category(modal_id, url) {
     $("#submit_modal_default").on("click", async function () {
-        insert(modal_id, $("#form_modal_default").serializeArray(), url);
+        await insert(modal_id, $("#form_modal_default").serializeArray(), url);
         await get_data("/backend/categories/show_categories", (categories) =>
             show_main_categories(categories)
         );
@@ -203,7 +221,7 @@ function submit_category(modal_id, url) {
 
 function edit_category(modal_id, url) {
     $("#submit_modal_default").on("click", async function () {
-        updated(modal_id, $("#form_modal_default").serializeArray(), url);
+        await updated(modal_id, $("#form_modal_default").serializeArray(), url);
         await get_data("/backend/categories/show_categories", (categories) =>
             show_main_categories(categories)
         );
@@ -215,9 +233,15 @@ function show_main_categories(categories) {
     $("#intellectual_type #accordion").html("");
     let i18n_name = [];
     categories.forEach(async (item, i) => {
-        window.navigator.languages[1].toLowerCase() == "th"
-            ? (i18n_name[i] = item.name_th)
-            : (i18n_name[i] = item.name_en);
+        if ($("html").attr("lang").toLowerCase() == "th") {
+            i18n_name[i] = item.name_th;
+        } else {
+            if (item.name_en) {
+                i18n_name[i] = item.name_en;
+            } else {
+                i18n_name[i] = item.name_th;
+            }
+        }
 
         if (item.parent == 0) {
             $("#intellectual_type #accordion").append(

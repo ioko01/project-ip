@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\FileController;
 use App\Http\Controllers\Backend\IntellectualController;
 use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    if (auth()->user()) {
-        if (auth()->user()->status_id != 1) {
-            Auth::logout();
-        }
-    }
-
-    return view('frontend.welcome');
-});
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Auth::routes(['verify' => true]);
 
@@ -49,6 +43,9 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         Route::get('subjects', [SubjectController::class, 'index'])->name('backend.subjects.index');
         Route::post('subject/store', [SubjectController::class, 'store'])->name('backend.subject.store');
         Route::get('subjects/show_subjects', [SubjectController::class, 'show_subjects']);
+        Route::put('subject/delete', [SubjectController::class, 'change_status_delete']);
+        Route::put('subject/edit', [SubjectController::class, 'edit_subject']);
+        Route::get('files/show_files/{id}', [FileController::class, 'show_files']);
     });
 });
 

@@ -21,6 +21,7 @@ class Subject extends Model
         'serial_number',
         'order',
         'tell',
+        'budget_year',
         'contact',
         'status_id',
     ];

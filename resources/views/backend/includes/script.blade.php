@@ -1,4 +1,18 @@
 @section('script')
+    <script>
+        async function fetchi18n() {
+            let response;
+            if ($("html").attr("lang").toLowerCase() == "th") {
+                response = await fetch("{{ asset('js/th.json', env('REDIRECT_HTTPS')) }}");
+            } else {
+                response = await fetch("{{ asset('js/en.json', env('REDIRECT_HTTPS')) }}");
+            }
+
+            const data = await response.json();
+            return data;
+        }
+        fetchi18n().then((res) => data = res);
+    </script>
     <script src="{{ asset('fontawesome-free-6.4.2-web/js/all.min.js', env('REDIRECT_HTTPS')) }}"></script>
     <script src="{{ asset('js/list-font-awesome.js', env('REDIRECT_HTTPS')) }}"></script>
     <script src="{{ asset('js/dateFormat.js', env('REDIRECT_HTTPS')) }}"></script>
@@ -37,18 +51,7 @@
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js', env('REDIRECT_HTTPS')) }}"></script>
 
     <script>
-        async function fetchi18n() {
-            const response = await fetch("{{ asset('js/th.json', env('REDIRECT_HTTPS')) }}")
-            const data = await response.json()
-            return data
-        }
-
-        let data;
         async function __(key, replacements = {}) {
-            if (!data) {
-                data = await fetchi18n()
-            }
-
             let translation = data[key] || key;
             for (const placeholder in replacements) {
                 translation = translation.replace(

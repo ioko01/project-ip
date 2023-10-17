@@ -4,7 +4,7 @@
 @include('frontend.includes.script')
 
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-locale="{{ app()->getLocale() }}">
     @yield('head')
 <body>
     <div id="app" style="min-height: 100vh;" class="d-flex flex-column justify-content-between">

@@ -1,5 +1,5 @@
 @section('navbar')
-    <div>
+    <div style="position: sticky;top:0px;z-index:9999;">
         <div id="line_on_navbar" class="bg-blue"></div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -35,7 +35,8 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link p-2 dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true"
+                                aria-expanded="false" v-pre>
                                 <i class="fa-solid fa-coins align-middle"></i> <span
                                     class="d-inline d-md-none d-lg-inline  text-wrap">{{ __('Intellectual Property') }}</span>
                             </a>
@@ -44,21 +45,82 @@
                                 $categories = DB::table('categories')
                                     ->where('categories.status_id', 1)
                                     ->get();
+                                $categories = $categories->toArray();
+                                $all_category = '';
+                                $children = [];
+                                $dropdown = [];
+                                DB::disconnect('categories');
+                                foreach ($categories as $key => $value) {
+                                    if ($value->child) {
+                                        array_push($children, $value);
+                                    }
+                                }
+                                
+                                foreach ($categories as $key => $category) {
+                                    foreach ($children as $key => $child) {
+                                        if ($child->child == $category->id) {
+                                            $dropdown[$category->id] = true;
+                                        }
+                                    }
+                                }
+                                
+                                foreach ($categories as $key => $value) {
+                                    if ($value->parent == 0) {
+                                        $all_category .= '<div style="position:relative;">';
+                                        if (array_search($value->id, array_keys($dropdown)) !== false) {
+                                            $all_category .= '<a data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-item text-nowrap dropdown-toggle" href="#">';
+                                        } else {
+                                            $all_category .= '<a class="dropdown-item text-nowrap" href="#">';
+                                        }
+                                        if (Config::get('app.locale') == 'th') {
+                                            $name = $value->name_th;
+                                        } else {
+                                            if ($value->name_en) {
+                                                $name = $value->name_en;
+                                            } else {
+                                                $name = $value->name_th;
+                                            }
+                                        }
+                                
+                                        $all_category .= '<i class="fa-solid fa-xs fa-' . $value->icon . ' align-middle"></i> ' . $name . ' <span class="fs-6 bg-light px-2 text-dark rounded">1</span></a>';
+                                    }
+                                
+                                    if (array_search($value->id, array_keys($dropdown)) !== false) {
+                                        $all_category .= '<ul class="submenu dropdown-menu">';
+                                        foreach ($children as $key => $child) {
+                                            if ($child->parent == 1 && $child->child == $value->id) {
+                                                if (Config::get('app.locale') == 'th') {
+                                                    $child_name = $child->name_th;
+                                                } else {
+                                                    if ($child->name_en) {
+                                                        $child_name = $child->name_en;
+                                                    } else {
+                                                        $child_name = $child->name_th;
+                                                    }
+                                                }
+                                
+                                                $all_category .=
+                                                    '<li>
+                                                        <a href="#" class="dropdown-item">' .
+                                                    '<i class="fa-solid fa-xs fa-' .
+                                                    $child->icon .
+                                                    ' align-middle"></i> ' .
+                                                    $child_name .
+                                                    '</a>
+                                            </li>';
+                                            }
+                                        }
+                                        $all_category .= '</ul>';
+                                    }
+                                    if ($value->parent == 0) {
+                                        $all_category .= '</div>';
+                                    }
+                                }
+                                
                             @endphp
 
                             <div class="dropdown-menu dropdown-menu-start w-auto dropend" aria-labelledby="navbarDropdown">
-                                @forelse ($categories as $item)
-                                    @if ($item->parent == 0)
-                                        <a class="dropdown-item text-wrap dropdown-toggle" href="#">
-                                            {{ __($item->name_th) }} <span
-                                                class="fs-6 bg-light px-2 text-dark rounded">1</span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><button class="dropdown-item" type="button">Action</button></li>
-                                        </ul>
-                                    @endif
-                                @empty
-                                @endforelse
+                                {!! $all_category !!}
                             </div>
                         </li>
                         @guest

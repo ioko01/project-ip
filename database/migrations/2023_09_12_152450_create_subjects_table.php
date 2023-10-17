@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('categories_id')->nullable()->comment('ไอดีหมวดหมู่');
             $table->text('name_th')->comment('ชื่อเรื่อง(ไทย)');
             $table->text('name_en')->nullable()->comment('ชื่อเรื่อง(อังกฤษ)');
+            $table->integer('budget_year')->nullable()->comment('ปีงบประมาณ');
             $table->text('author')->nullable()->comment('ผู้แต่ง/เจ้าของเรื่อง/ผู้ประดิษฐ์');
             $table->text('license')->nullable()->comment('การอนุญาต/อนุมัติ');
             $table->string('serial_number')->nullable()->comment('เลขที่คำขอ');

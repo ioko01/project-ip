@@ -100,5 +100,10 @@ return [
     "Icon" => "ไอคอน",
     "Edit" => "แก้ไข",
     "File Image" => "ไฟล์รูป",
-    "file image" => "ไฟล์รูป"
+    "file image" => "ไฟล์รูป",
+    "Budget Year" => "ปีงบประมาณ",
+    "budget year" => "ปีงบประมาณ",
+    "Loading" => "กำลังโหลด",
+    "loading" => "กำลังโหลด",
+    "Add File" => "เพิ่มไฟล์"
 ];

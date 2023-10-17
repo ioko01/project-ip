@@ -61,6 +61,57 @@ async function default_modal(
         );
         $("#form_modal_default").append(pending);
 
+        $("#subject_file").change(async (e) => {
+            const ext = ["pdf", "word", "image"];
+
+            let lb_file;
+            let lb_file_ext;
+            if (e.target.files[0].name.split(".")[1] == "pdf") {
+                lb_file_ext = `<i class="fa-solid fa-file-${ext[0]} fa-2xl"></i>`;
+            } else {
+                lb_file_ext = `<i class="fa-solid fa-file-${ext[1]} fa-2xl"></i>`;
+            }
+
+            if (e.target.files[0]) {
+                lb_file = `
+        <div style="cursor:default;max-width:250px;overflow-wrap:anywhere;" for="subject_file" class="btn mt-2 border p-0 rounded d-flex flex-column text-center">
+            <div class="p-5">${lb_file_ext}
+            <span class="d-block">
+                ${e.target.files[0].name}
+            </span>
+            </div>
+            <div class="d-flex">
+                <a href="#" class="btn btn-primary rounded-0 w-100 d-flex align-items-center justify-content-center"><i class="fa-solid fa-eye"></i>&nbsp;ดู</a>
+                <label for="subject_file" class="m-0 btn btn-warning text-white rounded-0 w-100 d-flex align-items-center justify-content-center"><i class="fa-solid fa-pen-to-square"></i>&nbsp;แก้ไข</label>
+            </div>
+        </div>
+        `;
+            }
+
+            $("#lb_subject_file").html(lb_file);
+        });
+
+        $("#subject_file_image").change(async (e) => {
+            let lb_file_img;
+            if (e.target.files[0]) {
+                lb_file_img = `
+        <div style="cursor:default;max-width:250px;overflow-wrap:anywhere;" for="subject_file_image" class="btn mt-2 border p-0 rounded d-flex flex-column text-center">
+            <div class="p-5"><i class="fa-solid fa-file-image fa-2xl"></i>
+            <span class="d-block">
+                ${e.target.files[0].name}
+            </span>
+            </div>
+            <div class="d-flex">
+                <a href="#" class="btn btn-primary rounded-0 w-100 d-flex align-items-center justify-content-center"><i class="fa-solid fa-eye"></i>&nbsp;ดู</a>
+                <label for="subject_file_image" class="m-0 btn btn-warning text-white rounded-0 w-100 d-flex align-items-center justify-content-center"><i class="fa-solid fa-pen-to-square"></i>&nbsp;แก้ไข</label>
+            </div>
+        </div>
+        `;
+            }
+
+            $("#lb_subject_file_image").html(lb_file_img);
+        });
+
         switch (submit_name) {
             case "category":
                 submit_category(modal_id, url);
@@ -85,6 +136,12 @@ async function default_modal(
                 break;
             case "subject":
                 submit_subject(modal_id, url);
+                break;
+            case "delete_subject":
+                delete_subject(modal_id, url);
+                break;
+            case "edit_subject":
+                edit_subject(modal_id, url);
                 break;
             default:
                 break;
